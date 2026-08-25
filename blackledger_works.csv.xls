@@ -1,0 +1,9 @@
+Work ID,Title,State,District,Vendor,Cost_Lakh,Progress,Risk,Severity
+"UP-0441","Community Hall","Uttar Pradesh","Sitapur","M/s Vijay Const","84.2","42","0.94","high"
+"UP-0512","Road Repair","Uttar Pradesh","Sitapur","M/s Sahu Infra","62.5","68","0.76","medium"
+"TS-2041","Drinking Water Point","Telangana","Malkajgiri","M/s Delta Works","48.1","18","0.98","high"
+"WB-1188","Community Centre","West Bengal","Bolpur","M/s Eastern Build","93.4","51","0.82","medium"
+"DL-0772","Drainage Improvement","Delhi","South West","M/s Metro Civils","55.9","89","0.39","low"
+"RJ-2290","Village Road","Rajasthan","Jaipur","M/s Aravalli Infra","71.4","36","0.91","high"
+"TN-0318","School Renovation","Tamil Nadu","Chennai South","M/s Coastal Infra","44.8","74","0.68","medium"
+"MH-9011","Primary Health Centre","Maharashtra","Mumbai West","M/s Western Works","88.2","93","0.34","low"

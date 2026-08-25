@@ -1,0 +1,680 @@
+{
+  "alerts": [
+    {
+      "id": "MNR-ALT-1504",
+      "sev": "high",
+      "title": "Expenditure Anomaly Spike",
+      "detail": "Belagavi \u00b7 \u20b945,543L spent \u00b7 Isolation Forest flag",
+      "model": "Isolation Forest",
+      "confidence": 1.0,
+      "action": "Review sudden expenditure spikes against approved works register."
+    },
+    {
+      "id": "MNR-ALT-3640",
+      "sev": "high",
+      "title": "High NIL Expenditure GPs",
+      "detail": "Siddipet \u00b7 20 GPs with 0 spend",
+      "model": "Isolation Forest",
+      "confidence": 1.0,
+      "action": "Investigate work allocation and fund flow blockages at Block level."
+    },
+    {
+      "id": "MNR-ALT-1603",
+      "sev": "high",
+      "title": "Expenditure Anomaly Spike",
+      "detail": "Wayanad \u00b7 \u20b919,070L spent \u00b7 Isolation Forest flag",
+      "model": "Isolation Forest",
+      "confidence": 0.99,
+      "action": "Review sudden expenditure spikes against approved works register."
+    },
+    {
+      "id": "MNR-ALT-1510",
+      "sev": "high",
+      "title": "Expenditure Anomaly Spike",
+      "detail": "Chitradurga \u00b7 \u20b936,788L spent \u00b7 Isolation Forest flag",
+      "model": "Isolation Forest",
+      "confidence": 0.97,
+      "action": "Review sudden expenditure spikes against approved works register."
+    },
+    {
+      "id": "MNR-ALT-1502",
+      "sev": "high",
+      "title": "Expenditure Anomaly Spike",
+      "detail": "Bengaluru \u00b7 \u20b9397L spent \u00b7 Isolation Forest flag",
+      "model": "Isolation Forest",
+      "confidence": 0.91,
+      "action": "Review sudden expenditure spikes against approved works register."
+    },
+    {
+      "id": "MNR-ALT-1529",
+      "sev": "high",
+      "title": "Expenditure Anomaly Spike",
+      "detail": "Ramanagara \u00b7 \u20b923,148L spent \u00b7 Isolation Forest flag",
+      "model": "Isolation Forest",
+      "confidence": 0.91,
+      "action": "Review sudden expenditure spikes against approved works register."
+    }
+  ],
+  "works": [
+    [
+      "MNR-0203",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Visakhapatanam",
+      "Nodal Agency",
+      5654.99,
+      31.6,
+      0.27,
+      "low"
+    ],
+    [
+      "MNR-0205",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "West Godavari",
+      "Nodal Agency",
+      14696.09,
+      25.6,
+      0.27,
+      "low"
+    ],
+    [
+      "MNR-0209",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Nellore",
+      "Nodal Agency",
+      33793.04,
+      26.6,
+      0.19,
+      "low"
+    ],
+    [
+      "MNR-0213",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Kurnool",
+      "Nodal Agency",
+      32834.94,
+      19.4,
+      0.48,
+      "low"
+    ],
+    [
+      "MNR-0217",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Eluru",
+      "Nodal Agency",
+      37366.57,
+      21.9,
+      0.5,
+      "low"
+    ],
+    [
+      "MNR-0221",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Nandyal",
+      "Nodal Agency",
+      25053.56,
+      25.6,
+      0.19,
+      "low"
+    ],
+    [
+      "MNR-0223",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Annamayya",
+      "Nodal Agency",
+      29404.32,
+      34.1,
+      0.06,
+      "low"
+    ],
+    [
+      "MNR-0224",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Tirupati",
+      "Nodal Agency",
+      30942.5,
+      29.7,
+      0.16,
+      "low"
+    ],
+    [
+      "MNR-0225",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Parvathipuram Manyam",
+      "Nodal Agency",
+      44396.86,
+      22.3,
+      0.22,
+      "low"
+    ],
+    [
+      "MNR-0210",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Chittoor",
+      "Nodal Agency",
+      31231.49,
+      23.4,
+      0.1,
+      "low"
+    ],
+    [
+      "MNR-0219",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Bapatla",
+      "Nodal Agency",
+      21913.82,
+      28.9,
+      0.12,
+      "low"
+    ],
+    [
+      "MNR-0226",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Kakinada",
+      "Nodal Agency",
+      22971.14,
+      30.2,
+      0.03,
+      "low"
+    ],
+    [
+      "MNR-0204",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "East Godavari",
+      "Nodal Agency",
+      18250.96,
+      31.9,
+      0.02,
+      "low"
+    ],
+    [
+      "MNR-0212",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Anantapur",
+      "Nodal Agency",
+      40958.89,
+      20.4,
+      0.21,
+      "low"
+    ],
+    [
+      "MNR-0214",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Alluri Sitharama Raju",
+      "Nodal Agency",
+      73056.99,
+      24.6,
+      0.75,
+      "medium"
+    ],
+    [
+      "MNR-0216",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Konaseema",
+      "Nodal Agency",
+      21256.34,
+      27.6,
+      0.0,
+      "low"
+    ],
+    [
+      "MNR-0222",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Sri Sathya Sai",
+      "Nodal Agency",
+      36065.52,
+      27.7,
+      0.14,
+      "low"
+    ],
+    [
+      "MNR-0201",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Srikakulam",
+      "Nodal Agency",
+      60653.44,
+      30.8,
+      0.59,
+      "medium"
+    ],
+    [
+      "MNR-0211",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Y.S.R",
+      "Nodal Agency",
+      30096.13,
+      25.2,
+      0.13,
+      "low"
+    ],
+    [
+      "MNR-0220",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Palnadu",
+      "Nodal Agency",
+      23103.91,
+      20.7,
+      0.37,
+      "low"
+    ],
+    [
+      "MNR-0206",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Krishna",
+      "Nodal Agency",
+      27514.38,
+      48.5,
+      0.1,
+      "low"
+    ],
+    [
+      "MNR-0208",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Prakasam",
+      "Nodal Agency",
+      39548.96,
+      22.7,
+      0.54,
+      "medium"
+    ],
+    [
+      "MNR-0202",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Vizianagaram",
+      "Nodal Agency",
+      46898.63,
+      26.5,
+      0.45,
+      "low"
+    ],
+    [
+      "MNR-0215",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Anakapalli",
+      "Nodal Agency",
+      41153.78,
+      26.0,
+      0.13,
+      "low"
+    ],
+    [
+      "MNR-0218",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Ntr",
+      "Nodal Agency",
+      22070.83,
+      40.0,
+      0.17,
+      "low"
+    ],
+    [
+      "MNR-0207",
+      "Rural Employment Gen.",
+      "Andhra Pradesh",
+      "Guntur",
+      "Nodal Agency",
+      8759.34,
+      23.6,
+      0.8,
+      "medium"
+    ],
+    [
+      "MNR-2903",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Cuddalore",
+      "Nodal Agency",
+      52728.6,
+      60.1,
+      0.54,
+      "medium"
+    ],
+    [
+      "MNR-2905",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Vellore",
+      "Nodal Agency",
+      18302.68,
+      36.1,
+      0.05,
+      "low"
+    ],
+    [
+      "MNR-2909",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Dharmapuri",
+      "Nodal Agency",
+      30749.4,
+      48.9,
+      0.07,
+      "low"
+    ],
+    [
+      "MNR-2915",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Tiruvarur",
+      "Nodal Agency",
+      17647.74,
+      45.5,
+      0.01,
+      "low"
+    ],
+    [
+      "MNR-2916",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Tiruchirappalli",
+      "Nodal Agency",
+      47510.57,
+      71.4,
+      0.18,
+      "low"
+    ],
+    [
+      "MNR-2917",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Karur",
+      "Nodal Agency",
+      16466.57,
+      38.6,
+      0.07,
+      "low"
+    ],
+    [
+      "MNR-2920",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Madurai",
+      "Nodal Agency",
+      39021.67,
+      42.4,
+      0.1,
+      "low"
+    ],
+    [
+      "MNR-2923",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Ramanathapuram",
+      "Nodal Agency",
+      29286.27,
+      68.5,
+      0.1,
+      "low"
+    ],
+    [
+      "MNR-2925",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Sivagangai",
+      "Nodal Agency",
+      35357.1,
+      53.9,
+      0.11,
+      "low"
+    ],
+    [
+      "MNR-2930",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Krishnagiri",
+      "Nodal Agency",
+      35191.63,
+      68.4,
+      0.09,
+      "low"
+    ],
+    [
+      "MNR-2932",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Tiruppur",
+      "Nodal Agency",
+      23631.0,
+      61.9,
+      0.04,
+      "low"
+    ],
+    [
+      "MNR-2933",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Chengalpattu",
+      "Nodal Agency",
+      21857.12,
+      53.7,
+      0.01,
+      "low"
+    ],
+    [
+      "MNR-2936",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Tenkasi",
+      "Nodal Agency",
+      15350.45,
+      49.0,
+      0.03,
+      "low"
+    ],
+    [
+      "MNR-2937",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Kallakurichi",
+      "Nodal Agency",
+      42028.58,
+      55.6,
+      0.21,
+      "low"
+    ],
+    [
+      "MNR-2938",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Mayiladuthurai",
+      "Nodal Agency",
+      22511.82,
+      63.5,
+      0.0,
+      "low"
+    ],
+    [
+      "MNR-2904",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Villupuram",
+      "Nodal Agency",
+      60508.37,
+      52.1,
+      0.53,
+      "medium"
+    ],
+    [
+      "MNR-2906",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Tiruvannamalai",
+      "Nodal Agency",
+      64089.32,
+      54.5,
+      0.62,
+      "medium"
+    ],
+    [
+      "MNR-2910",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Erode",
+      "Nodal Agency",
+      20476.28,
+      57.2,
+      0.04,
+      "low"
+    ],
+    [
+      "MNR-2911",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Coimbatore",
+      "Nodal Agency",
+      9856.88,
+      47.6,
+      0.12,
+      "low"
+    ],
+    [
+      "MNR-2912",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "The Nilgiris",
+      "Nodal Agency",
+      4322.48,
+      37.3,
+      0.37,
+      "low"
+    ],
+    [
+      "MNR-2913",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Thanjavur",
+      "Nodal Agency",
+      45403.0,
+      59.0,
+      0.13,
+      "low"
+    ],
+    [
+      "MNR-2914",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Nagapattinam",
+      "Nodal Agency",
+      12199.2,
+      54.5,
+      0.02,
+      "low"
+    ],
+    [
+      "MNR-2924",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Virudhunagar",
+      "Nodal Agency",
+      40273.35,
+      71.2,
+      0.13,
+      "low"
+    ],
+    [
+      "MNR-2927",
+      "Rural Employment Gen.",
+      "Tamil Nadu",
+      "Thoothukkudi",
+      "Nodal Agency",
+      22210.35,
+      40.8,
+      0.07,
+      "low"
+    ]
+  ],
+  "cases": [
+    {
+      "id": "MNR-CASE-01",
+      "title": "Belagavi Expenditure & Allocation Audit",
+      "priority": "High",
+      "owner": "District Magistrate / Collector",
+      "status": "In review",
+      "note": "Review sudden expenditure spikes against approved works register."
+    },
+    {
+      "id": "MNR-CASE-02",
+      "title": "Siddipet Expenditure & Allocation Audit",
+      "priority": "High",
+      "owner": "District Magistrate / Collector",
+      "status": "In review",
+      "note": "Investigate work allocation and fund flow blockages at Block level."
+    },
+    {
+      "id": "MNR-CASE-03",
+      "title": "Wayanad Expenditure & Allocation Audit",
+      "priority": "High",
+      "owner": "District Magistrate / Collector",
+      "status": "In review",
+      "note": "Review sudden expenditure spikes against approved works register."
+    }
+  ],
+  "hotspots": [
+    {
+      "lat": 18.101,
+      "lng": 78.852,
+      "name": "Siddipet Cluster",
+      "risk": 1.0,
+      "works": 32066
+    },
+    {
+      "lat": 14.223,
+      "lng": 76.398,
+      "name": "Chitradurga Cluster",
+      "risk": 0.97,
+      "works": 101120
+    },
+    {
+      "lat": 12.7209,
+      "lng": 77.2799,
+      "name": "Ramanagara Cluster",
+      "risk": 0.91,
+      "works": 71820
+    },
+    {
+      "lat": 12.9716,
+      "lng": 77.5946,
+      "name": "Bengaluru Cluster",
+      "risk": 0.91,
+      "works": 3143
+    },
+    {
+      "lat": 15.8497,
+      "lng": 74.4977,
+      "name": "Belagavi Cluster",
+      "risk": 1.0,
+      "works": 99771
+    },
+    {
+      "lat": 11.605,
+      "lng": 76.083,
+      "name": "Wayanad Cluster",
+      "risk": 0.99,
+      "works": 17307
+    }
+  ]
+}

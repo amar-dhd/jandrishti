@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JanDrishti — MPLADS Risk Intelligence | Oversight Platform</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.3/papaparse.min.js"></script>
+
+</head>
+
+<body>
+  <div id="toast" class="toast toast-end toast-bottom z-[70]"></div>
+  <div id="tooltip" class="tooltip"></div>
+  <header
+    class="h-[64px] sticky top-0 z-40 border-b border-slate-800 bg-[#0b1329] flex items-center justify-between px-4 lg:px-6">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-lg bg-red-500/20 text-red-400 border border-red-500/30 grid place-items-center">
+        <i class="fa-solid fa-shield-halved text-xl"></i></div>
+      <div>
+        <div class="font-black tracking-tight text-2xl text-white">JanDrishti</div>
+        <div id="headerSubtitle" class="text-[10px] uppercase tracking-[.25em] text-slate-500">MPLADS Oversight · Advanced Prototype</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2 md:gap-3">
+      <div class="hidden md:flex items-center gap-2 px-3 py-2 rounded-lg bg-slate-900/70 border border-slate-800"><span
+          class="live-dot"></span><span class="text-xs text-slate-300">Pipeline healthy</span></div>
+      <select id="schemeSelect"
+        class="select select-sm bg-slate-900 border-slate-700 text-white font-bold text-cyan-300">
+        <option value="mplads">MPLADS (Civic Works)</option>
+        <option value="mnrega">MNREGA (Rural Employment)</option>
+        <option value="pmay">PMAY (Rural Housing)</option>
+        <option value="jjm">Jal Jeevan Mission (Water)</option>
+        <option value="custom">+ Generate Custom Scheme...</option>
+      </select>
+      <button id="alertsBtn" class="btn btn-sm bg-red-700 hover:bg-red-800 border-0 text-white"><i
+          class="fa-solid fa-bell"></i><span class="hidden sm:inline">12 Alerts</span></button>
+      <button id="themeBtn" class="btn btn-sm btn-ghost text-slate-300" title="Accent mode"><i
+          class="fa-solid fa-sparkles"></i></button>
+    </div>
+  </header>
+  <div class="flex">
+    <aside id="sidebar" class="w-64 shrink-0 side-scroll border-r border-slate-800 bg-[#09111e] hidden lg:block">
+      <div class="p-4 border-b border-slate-800">
+        <div class="text-[10px] uppercase tracking-[.2em] text-slate-500 mb-2">Navigation</div>
+        <div class="text-sm text-slate-300">Role: <span id="roleLabel" class="font-semibold text-white">MoSPI /
+            Ministry</span></div>
+      </div>
+      <nav class="p-3 space-y-1">
+        <button data-section="dashboard"
+          class="nav-item nav-active w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm"><i
+            class="fa-solid fa-gauge-high w-5"></i> Command Center</button>
+        <button data-section="alerts"
+          class="nav-item w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm"><i
+            class="fa-solid fa-triangle-exclamation w-5"></i> Risk & Alerts <span
+            class="ml-auto chip">12</span></button>
+        <button data-section="works"
+          class="nav-item w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm"><i
+            class="fa-solid fa-list-check w-5"></i> Works Explorer</button>
+        <button data-section="network"
+          class="nav-item w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm"><i
+            class="fa-solid fa-diagram-project w-5"></i> GNN Network</button>
+        <button data-section="map"
+          class="nav-item w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm"><i
+            class="fa-solid fa-map-location-dot w-5"></i> Risk Map</button>
+        <button data-section="cases"
+          class="nav-item w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm"><i
+            class="fa-solid fa-folder-open w-5"></i> Case Management</button>
+        <button data-section="reports"
+          class="nav-item w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm"><i
+            class="fa-solid fa-file-export w-5"></i> Reports & Export</button>
+        <button data-section="data"
+          class="nav-item w-full text-left flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm"><i
+            class="fa-solid fa-database w-5"></i> Data Intelligence <span class="ml-auto chip">CSV</span></button>
+      </nav>
+      <div class="mt-5 p-3">
+        <div class="card-panel rounded-xl p-4">
+          <div class="text-xs font-semibold text-slate-200 mb-2">AI Engine</div>
+          <div class="space-y-2 text-[11px] text-slate-400">
+            <div class="flex justify-between"><span>GraphSAGE</span><span class="text-emerald-400">Ready</span></div>
+            <div class="flex justify-between"><span>Isolation Forest</span><span class="text-emerald-400">Ready</span>
+            </div>
+            <div class="flex justify-between"><span>Rule Engine</span><span class="text-emerald-400">Ready</span></div>
+            <div class="flex justify-between"><span>Forecasting</span><span class="text-amber-300">Synthetic</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="px-4 py-5 text-[10px] leading-5 text-slate-600">Prototype data only. No real enforcement actions,
+        personal data, or live government systems are connected.</div>
+    </aside>
+    <main class="main-scroll flex-1 w-full">
+      <div class="p-4 md:p-6 max-w-[1700px] mx-auto space-y-6">
+        <section id="section-dashboard" class="app-section">
+          <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4 mb-5">
+            <div>
+              <div class="text-xs text-red-400 font-semibold uppercase tracking-[.2em]">Oversight command center</div>
+              <h1 id="dashboardTitle" class="text-2xl md:text-3xl font-black mt-1">National MPLADS Risk Intelligence</h1>
+              <p class="text-sm text-slate-400 mt-1">Unified view of allocation, execution, anomalies, compliance, and
+                entity networks.</p>
+            </div>
+            <div class="flex flex-wrap gap-2"><span class="chip">Last sync: 23 Aug 2026 · 12:24 IST</span><button
+                id="refreshBtn" class="btn btn-sm bg-slate-800 hover:bg-slate-700 border-slate-700"><i
+                  class="fa-solid fa-rotate"></i> Refresh signals</button></div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div class="card-panel card-hover rounded-2xl p-5 kpi">
+              <div class="flex justify-between"><span id="kpiLabel0" class="text-sm text-slate-400">Total Works</span><span
+                  class="w-9 h-9 rounded-lg bg-cyan-400/10 grid place-items-center text-cyan-300"><i
+                    class="fa-solid fa-briefcase"></i></span></div>
+              <div id="kpiVal0" class="text-3xl font-black metric-num mt-3">12,847</div>
+              <div id="kpiSub0" class="text-xs text-emerald-400 mt-2">↑ 3.0% from last quarter</div>
+            </div>
+            <div class="card-panel card-hover rounded-2xl p-5 kpi">
+              <div class="flex justify-between"><span id="kpiLabel1" class="text-sm text-slate-400">Avg Risk Score</span><span
+                  class="w-9 h-9 rounded-lg bg-red-400/10 grid place-items-center text-red-300"><i
+                    class="fa-solid fa-bolt"></i></span></div>
+              <div id="kpiVal1" class="text-3xl font-black metric-num mt-3 text-red-300">0.67</div>
+              <div id="kpiSub1" class="text-xs text-red-300 mt-2">2,104 works above high-risk threshold</div>
+            </div>
+            <div class="card-panel card-hover rounded-2xl p-5 kpi">
+              <div class="flex justify-between"><span id="kpiLabel2" class="text-sm text-slate-400">Funds Disbursed</span><span
+                  class="w-9 h-9 rounded-lg bg-amber-400/10 grid place-items-center text-amber-300"><i
+                    class="fa-solid fa-indian-rupee-sign"></i></span></div>
+              <div id="kpiVal2" class="text-3xl font-black metric-num mt-3">₹18,942 Cr</div>
+              <div id="kpiSub2" class="text-xs text-amber-300 mt-2">22% unspent in illustrative last-FY snapshot</div>
+            </div>
+            <div class="card-panel card-hover rounded-2xl p-5 kpi">
+              <div class="flex justify-between"><span id="kpiLabel3" class="text-sm text-slate-400">SC/ST Compliance</span><span
+                  class="w-9 h-9 rounded-lg bg-orange-400/10 grid place-items-center text-orange-300"><i
+                    class="fa-solid fa-scale-balanced"></i></span></div>
+              <div id="kpiVal3" class="text-3xl font-black metric-num mt-3 text-orange-300">78%</div>
+              <div id="kpiSub3" class="text-xs text-red-300 mt-2">Illustrative gap in 12 states</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 mt-4">
+            <div class="xl:col-span-2 card-panel rounded-2xl p-5">
+              <div class="flex items-center justify-between mb-4">
+                <div>
+                  <h2 class="font-bold">Risk & Utilization Trend</h2>
+                  <p class="text-xs text-slate-500">Illustrative monthly trend</p>
+                </div>
+                <div class="flex gap-1"><button class="tab-btn active" data-chart="trend">Trend</button><button
+                    class="tab-btn" data-chart="riskdist">Risk mix</button></div>
+              </div><canvas id="trendChart" height="100"></canvas>
+            </div>
+            <div class="card-panel rounded-2xl p-5">
+              <div class="flex items-center justify-between mb-3">
+                <div>
+                  <h2 class="font-bold">AI Signal Mix</h2>
+                  <p class="text-xs text-slate-500">Current alert composition</p>
+                </div><span class="chip">Live</span>
+              </div><canvas id="signalChart" height="210"></canvas>
+              <div class="grid grid-cols-3 gap-2 mt-3 text-center text-xs">
+                <div>
+                  <div class="text-red-300 font-bold">47%</div>
+                  <div class="text-slate-500">Graph</div>
+                </div>
+                <div>
+                  <div class="text-amber-300 font-bold">31%</div>
+                  <div class="text-slate-500">Rules</div>
+                </div>
+                <div>
+                  <div class="text-cyan-300 font-bold">22%</div>
+                  <div class="text-slate-500">Anomaly</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+            <div class="lg:col-span-2 card-panel rounded-2xl p-5">
+              <div class="flex justify-between items-center mb-3">
+                <div>
+                  <h2 class="font-bold">Top Risk Signals</h2>
+                  <p class="text-xs text-slate-500">Prioritized for human review</p>
+                </div><button data-go="alerts" class="text-xs text-red-300 hover:text-white">View all →</button>
+              </div>
+              <div id="topSignals" class="grid md:grid-cols-2 gap-3"></div>
+            </div>
+            <div class="card-panel rounded-2xl p-5">
+              <div class="flex justify-between items-center mb-3">
+                <h2 class="font-bold">Operational Readiness</h2><span class="text-xs text-emerald-400">92%</span>
+              </div>
+              <div class="space-y-3 text-xs">
+                <div>
+                  <div class="flex justify-between mb-1"><span class="text-slate-400">Data
+                      ingestion</span><span>100%</span></div>
+                  <div class="progressbar"><span style="width:100%;background:#22c55e"></span></div>
+                </div>
+                <div>
+                  <div class="flex justify-between mb-1"><span class="text-slate-400">Entity
+                      resolution</span><span>94%</span></div>
+                  <div class="progressbar"><span style="width:94%;background:#22d3ee"></span></div>
+                </div>
+                <div>
+                  <div class="flex justify-between mb-1"><span class="text-slate-400">Graph build</span><span>91%</span>
+                  </div>
+                  <div class="progressbar"><span style="width:91%;background:#a78bfa"></span></div>
+                </div>
+                <div>
+                  <div class="flex justify-between mb-1"><span class="text-slate-400">Field
+                      verification</span><span>73%</span></div>
+                  <div class="progressbar"><span style="width:73%;background:#f59e0b"></span></div>
+                </div>
+              </div>
+              <div class="mt-4 p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-xs text-slate-400"><i
+                  class="fa-solid fa-circle-info text-cyan-300 mr-1"></i> Forecast and breach-related modules are
+                simulated for the prototype.</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-alerts" class="app-section hidden-view">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-3">
+            <div>
+              <div class="text-xs text-red-400 font-semibold uppercase tracking-[.2em]">Risk intelligence</div>
+              <h2 class="text-2xl font-black">Alerts & Explainability</h2>
+              <p class="text-sm text-slate-400">Every alert includes a model signal, confidence, and recommended review
+                action.</p>
+            </div>
+            <div class="flex gap-2"><select id="riskFilter" class="select select-sm bg-slate-900 border-slate-700">
+                <option value="all">All severity</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+              </select><input id="alertSearch" class="input-dark input input-sm w-48"
+                placeholder="Search alert / district" /></div>
+          </div>
+          <div id="alertGrid" class="grid grid-cols-1 xl:grid-cols-2 gap-4 mt-5"></div>
+        </section>
+
+        <section id="section-works" class="app-section hidden-view">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-3">
+            <div>
+              <div class="text-xs text-cyan-300 font-semibold uppercase tracking-[.2em]">Entity explorer</div>
+              <h2 class="text-2xl font-black">Works Explorer</h2>
+              <p class="text-sm text-slate-400">Search, filter, inspect, and create a review case from illustrative work
+                records.</p>
+            </div>
+            <div class="flex flex-wrap gap-2"><input id="workSearch" class="input-dark input input-sm w-56"
+                placeholder="Work ID, title, vendor..." /><select id="workRisk"
+                class="select select-sm bg-slate-900 border-slate-700">
+                <option value="all">All risk</option>
+                <option value="high">High</option>
+                <option value="medium">Medium</option>
+                <option value="low">Low</option>
+              </select><button id="exportCSV" class="btn btn-sm bg-slate-800 border-slate-700"><i
+                  class="fa-solid fa-file-csv"></i> CSV</button></div>
+          </div>
+          <div class="card-panel rounded-2xl mt-5 table-wrap">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th>Work ID</th>
+                  <th>Title</th>
+                  <th>State</th>
+                  <th>District</th>
+                  <th>Vendor</th>
+                  <th>Cost ₹L</th>
+                  <th>Progress</th>
+                  <th>Risk</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="worksBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="section-network" class="app-section hidden-view">
+          <div class="grid grid-cols-1 xl:grid-cols-4 gap-4">
+            <div class="xl:col-span-3 card-panel rounded-2xl p-5">
+              <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4">
+                <div>
+                  <div class="text-xs text-fuchsia-300 uppercase tracking-[.2em] font-semibold">Temporal heterogeneous
+                    graph</div>
+                  <h2 class="text-2xl font-black">Collusion Network Explorer</h2>
+                  <p class="text-sm text-slate-400">Illustrative MP → IA → Vendor relationships and suspicious
+                    cross-links.</p>
+                </div>
+                <div class="flex gap-2"><button id="networkReset"
+                    class="btn btn-sm btn-outline border-slate-700">Reset</button><button id="networkAnimate"
+                    class="btn btn-sm bg-fuchsia-700 border-0">Simulate</button></div>
+              </div>
+              <div id="network" class="h-[560px] rounded-xl bg-[#09111e] border border-slate-800"></div>
+            </div>
+            <div class="space-y-4">
+              <div class="card-panel rounded-2xl p-5">
+                <h3 class="font-bold">Selected entity</h3>
+                <div id="entityPanel" class="mt-3 text-sm text-slate-400">Click a node to inspect it.</div>
+              </div>
+              <div class="card-panel rounded-2xl p-5">
+                <h3 class="font-bold mb-3">Model signals</h3>
+                <div class="space-y-3 text-xs">
+                  <div class="flex justify-between"><span>GraphSAGE confidence</span><b class="text-red-300">0.98</b>
+                  </div>
+                  <div class="flex justify-between"><span>Shared vendor ratio</span><b class="text-amber-300">71%</b>
+                  </div>
+                  <div class="flex justify-between"><span>Temporal overlap</span><b class="text-cyan-300">83%</b></div>
+                  <div class="flex justify-between"><span>Geo proximity</span><b class="text-emerald-300">0.91</b></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-map" class="app-section hidden-view">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-3">
+            <div>
+              <div class="text-xs text-orange-300 uppercase tracking-[.2em] font-semibold">Geospatial intelligence</div>
+              <h2 class="text-2xl font-black">National Risk Map</h2>
+              <p class="text-sm text-slate-400">Hotspots use illustrative coordinates and risk values from the
+                prototype.</p>
+            </div><button id="fitMap" class="btn btn-sm bg-slate-800 border-slate-700">Fit hotspots</button>
+          </div>
+          <div class="card-panel rounded-2xl p-3 mt-5">
+            <div id="map"></div>
+          </div>
+          <div id="mapStats" class="grid grid-cols-2 md:grid-cols-5 gap-3 mt-4"></div>
+        </section>
+
+        <section id="section-cases" class="app-section hidden-view">
+          <div class="flex items-end justify-between gap-3">
+            <div>
+              <div class="text-xs text-emerald-300 uppercase tracking-[.2em] font-semibold">Human-in-the-loop workflow
+              </div>
+              <h2 class="text-2xl font-black">Case Management</h2>
+              <p class="text-sm text-slate-400">Turn model output into reviewable, auditable cases.</p>
+            </div><button id="newCase" class="btn btn-sm bg-red-700 border-0"><i class="fa-solid fa-plus"></i> New
+              case</button>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5" id="caseGrid"></div>
+        </section>
+
+
+        <section id="section-data" class="app-section hidden-view">
+          <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+            <div>
+              <div class="text-xs text-cyan-300 font-semibold uppercase tracking-[.2em]">Data intelligence</div>
+              <h2 class="text-2xl font-black">CSV Upload & Automatic Analysis</h2>
+              <p class="text-sm text-slate-400">Upload one or more CSV files. The browser detects columns, summarizes
+                the data, finds quality issues, and builds charts from the fields it recognizes.</p>
+            </div>
+            <div class="flex flex-wrap gap-2"><button id="sampleCsvBtn"
+                class="btn btn-sm bg-slate-800 border-slate-700"><i class="fa-solid fa-wand-magic-sparkles"></i> Load
+                sample dataset</button><button id="clearCsvBtn"
+                class="btn btn-sm btn-ghost text-slate-400">Clear</button></div>
+          </div>
+          <div class="grid grid-cols-1 xl:grid-cols-3 gap-4 mt-5">
+            <div class="xl:col-span-1 space-y-4">
+              <div id="uploadZone" class="upload-zone p-6 text-center cursor-pointer">
+                <div class="w-14 h-14 rounded-2xl bg-cyan-400/10 text-cyan-300 grid place-items-center mx-auto"><i
+                    class="fa-solid fa-file-arrow-up text-2xl"></i></div>
+                <h3 class="font-bold mt-4">Drop CSV files here</h3>
+                <p class="text-xs text-slate-500 mt-1">or click to browse from your computer</p>
+                <input id="csvInput" type="file" accept=".csv,text/csv" multiple class="hidden" />
+                <button id="browseCsvBtn" class="btn btn-sm bg-cyan-700 border-0 mt-4">Choose CSV</button>
+              </div>
+              <div class="card-panel rounded-2xl p-5">
+                <div class="flex items-center justify-between">
+                  <h3 class="font-bold">Loaded datasets</h3><span id="datasetCount" class="chip">0</span>
+                </div>
+                <div id="datasetList" class="space-y-2 mt-4">
+                  <div class="text-xs text-slate-600">No CSV uploaded yet.</div>
+                </div>
+              </div>
+              <div class="card-panel rounded-2xl p-5">
+                <h3 class="font-bold">How detection works</h3>
+                <div class="space-y-3 mt-4 text-xs text-slate-400">
+                  <div><span class="dataset-pill">Year / Date</span> becomes a time dimension.</div>
+                  <div><span class="dataset-pill">State / District</span> becomes a geography dimension.</div>
+                  <div><span class="dataset-pill">Amount / Cost / Utilized</span> becomes a numeric metric.</div>
+                  <div><span class="dataset-pill">Status / Category / Vendor</span> becomes a categorical dimension.
+                  </div>
+                  <div><span class="dataset-pill">Risk / Score</span> becomes an anomaly/risk metric when present.</div>
+                </div>
+              </div>
+            </div>
+            <div class="xl:col-span-2 space-y-4">
+              <div id="analysisEmpty" class="card-panel rounded-2xl p-8 text-center">
+                <div class="text-cyan-300 text-4xl"><i class="fa-solid fa-chart-column"></i></div>
+                <h3 class="font-bold text-xl mt-4">Upload a dataset to begin</h3>
+                <p class="text-sm text-slate-500 mt-2">The analyzer runs locally in the browser. Your CSV is not
+                  uploaded to a server by this prototype.</p>
+              </div>
+              <div id="analysisPanel" class="hidden space-y-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="analysisStats"></div>
+                <div class="card-panel rounded-2xl p-5">
+                  <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                    <div>
+                      <h3 class="font-bold">Detected schema</h3>
+                      <p id="schemaSummary" class="text-xs text-slate-500 mt-1"></p>
+                    </div>
+                    <div id="schemaPills" class="flex flex-wrap gap-2"></div>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                  <div class="card-panel rounded-2xl p-5">
+                    <div class="flex justify-between items-center mb-3">
+                      <div>
+                        <h3 id="primaryChartTitle" class="font-bold">Primary analysis</h3>
+                        <p class="text-xs text-slate-500">Automatically selected from detected columns</p>
+                      </div><select id="analysisMetric" class="select select-sm bg-slate-900 border-slate-700"></select>
+                    </div><canvas id="csvPrimaryChart" height="180"></canvas>
+                  </div>
+                  <div class="card-panel rounded-2xl p-5">
+                    <div class="flex justify-between items-center mb-3">
+                      <div>
+                        <h3 class="font-bold">Category / geography breakdown</h3>
+                        <p class="text-xs text-slate-500">Top values from the best available dimension</p>
+                      </div><select id="analysisDimension"
+                        class="select select-sm bg-slate-900 border-slate-700"></select>
+                    </div><canvas id="csvBreakdownChart" height="180"></canvas>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+                  <div class="card-panel rounded-2xl p-5">
+                    <h3 class="font-bold">Data quality</h3>
+                    <div id="qualityPanel" class="grid grid-cols-2 gap-3 mt-4"></div>
+                  </div>
+                  <div class="card-panel rounded-2xl p-5">
+                    <h3 class="font-bold">Analysis insights</h3>
+                    <div id="insightsPanel" class="space-y-2 mt-4"></div>
+                  </div>
+                </div>
+                <div class="card-panel rounded-2xl p-5">
+                  <div class="flex items-center justify-between mb-3">
+                    <div>
+                      <h3 class="font-bold">Dataset preview</h3>
+                      <p id="previewSummary" class="text-xs text-slate-500 mt-1"></p>
+                    </div><button id="exportAnalyzedCsv" class="btn btn-sm bg-slate-800 border-slate-700"><i
+                        class="fa-solid fa-download"></i> Export filtered view</button>
+                  </div>
+                  <div id="csvPreview" class="mini-table"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="section-reports" class="app-section hidden-view">
+          <div>
+            <div class="text-xs text-violet-300 uppercase tracking-[.2em] font-semibold">Evidence pack</div>
+            <h2 class="text-2xl font-black">Reports & Export</h2>
+            <p class="text-sm text-slate-400">Export prototype summaries for presentation and analysis.</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-5"><button id="exportJSON"
+              class="card-panel card-hover rounded-2xl p-6 text-left"><i
+                class="fa-solid fa-file-code text-violet-300 text-2xl"></i>
+              <h3 class="font-bold mt-4">Export JSON snapshot</h3>
+              <p class="text-xs text-slate-500 mt-1">All illustrative KPIs, alerts, works, and cases.</p>
+            </button><button id="exportPPT" class="card-panel card-hover rounded-2xl p-6 text-left"><i
+                class="fa-solid fa-file-powerpoint text-red-300 text-2xl"></i>
+              <h3 class="font-bold mt-4">Export PPT deck</h3>
+              <p class="text-xs text-slate-500 mt-1">Prototype briefing with problem, AI engine, dashboard and impact.
+              </p>
+            </button><button id="printReport" class="card-panel card-hover rounded-2xl p-6 text-left"><i
+                class="fa-solid fa-print text-cyan-300 text-2xl"></i>
+              <h3 class="font-bold mt-4">Print / PDF view</h3>
+              <p class="text-xs text-slate-500 mt-1">Uses the browser print dialog.</p>
+            </button></div>
+          <div class="card-panel rounded-2xl p-5 mt-5">
+            <h3 class="font-bold">Prototype architecture</h3>
+            <div class="grid md:grid-cols-5 gap-3 mt-4 text-xs text-center">
+              <div class="rounded-xl bg-slate-900 border border-slate-800 p-4">eSAKSHI / open data</div>
+              <div class="grid place-items-center text-slate-600"><i class="fa-solid fa-arrow-right"></i></div>
+              <div class="rounded-xl bg-slate-900 border border-slate-800 p-4">FastAPI ingest + entity resolution</div>
+              <div class="grid place-items-center text-slate-600"><i class="fa-solid fa-arrow-right"></i></div>
+              <div class="rounded-xl bg-slate-900 border border-slate-800 p-4">Hybrid AI → risk engine → dashboards
+              </div>
+            </div>
+            <div class="text-xs text-slate-500 mt-4">Based on the architecture described in the supplied JanDrishti
+              prototype; live government endpoints are not connected in this demo.</div>
+          </div>
+        </section>
+
+        <footer id="footerText" class="pt-2 pb-8 text-center text-[11px] text-slate-600">JanDrishti Advanced Prototype · Scheme Oversight Concept · Synthetic / illustrative data · Not for production or enforcement use</footer>
+      </div>
+    </main>
+  </div>
+
+  <dialog id="inspectModal" class="modal">
+    <div class="modal-box max-w-3xl bg-[#0d1625] border border-slate-700 text-slate-200">
+      <div class="flex items-center justify-between">
+        <h3 id="inspectTitle" class="font-bold text-xl">Inspection</h3><button class="btn btn-sm btn-circle btn-ghost"
+          onclick="inspectModal.close()">✕</button>
+      </div>
+      <div id="inspectBody" class="mt-4"></div>
+      <div class="modal-action"><button id="createCaseFromModal" class="btn bg-red-700 border-0">Create
+          case</button><button class="btn btn-ghost" onclick="inspectModal.close()">Close</button></div>
+    </div>
+  </dialog>
+  <dialog id="caseModal" class="modal">
+    <div class="modal-box bg-[#0d1625] border border-slate-700 text-slate-200">
+      <h3 class="font-bold text-xl">Create review case</h3>
+      <div class="space-y-3 mt-4"><input id="caseTitle" class="input-dark input w-full"
+          placeholder="Case title" /><textarea id="caseNote" class="textarea input-dark w-full" rows="4"
+          placeholder="Review note / next action"></textarea><select id="casePriority"
+          class="select bg-slate-900 border-slate-700 w-full">
+          <option>High</option>
+          <option selected>Medium</option>
+          <option>Low</option>
+        </select></div>
+      <div class="modal-action"><button id="saveCase" class="btn bg-red-700 border-0">Create</button><button
+          class="btn btn-ghost" onclick="caseModal.close()">Cancel</button></div>
+    </div>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
